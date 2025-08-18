@@ -1,0 +1,12 @@
+# === Java build output ===
+out/
+*.class
+
+# === IntelliJ IDEA ===
+*.iml
+.idea/
+!.idea/.gitignore
+
+# === OS junk ===
+.DS_Store
+Thumbs.db
