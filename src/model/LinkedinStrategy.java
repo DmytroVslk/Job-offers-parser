@@ -28,7 +28,7 @@ public class LinkedinStrategy implements Strategy {
             System.out.println("Document length: " + doc.html().length());
 
             // Знаходимо елементи вакансій
-            Elements vacanciesHtmlList = doc.select("div[data-entity-urn*='jobPosting']");
+            Elements vacanciesHtmlList = doc.select("a[href*='/jobs/view/']");
             System.out.println("Found jobPosting elements: " + vacanciesHtmlList.size());
 
             // Виводимо структуру перших кількох елементів для аналізу
