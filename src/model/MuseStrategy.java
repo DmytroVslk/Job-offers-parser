@@ -52,6 +52,7 @@ public class MuseStrategy implements Strategy{
 
             for(int i = 0; i < result.length(); i++){
                 JSONObject job = result.getJSONObject(i);
+                
             }
 
 
