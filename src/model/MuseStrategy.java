@@ -22,7 +22,7 @@ public class MuseStrategy implements Strategy{
 
         try{
             // Запит декількох сторінок
-            for(int page = 1; page <= 3; page++) {
+            for(int page = 1; page <= 50; page++) {
                 //Build URL
                 String urlString = API_BASE + 
                     "?category=Software%20Engineering" + 
@@ -61,8 +61,10 @@ public class MuseStrategy implements Strategy{
 
                 for(int i = 0; i < result.length(); i++){
                     JSONObject job = result.getJSONObject(i);
-                    JobPosting vacancy = extractJobPosting(job);
-                    allVacancies.add(vacancy);
+                    JobPosting vacancy = extractJobPosting(job, searchString);
+                    if(vacancy != null) {
+                        allVacancies.add(vacancy);
+                    }
                 }
             }
         } catch (Exception e){
@@ -74,7 +76,33 @@ public class MuseStrategy implements Strategy{
     }
 
     // Extract and set job details
-    private JobPosting extractJobPosting(JSONObject job){
+    private JobPosting extractJobPosting(JSONObject job, String searchString){
+        //Location - Find matching location or return null if not found
+        JSONArray locations = job.optJSONArray("locations");
+        String selectedCity = null;
+        
+        if(locations != null && locations.length() > 0){
+            // Спробуємо знайти локацію, яка точно відповідає пошуковому запиту
+            for(int i = 0; i < locations.length(); i++){
+                JSONObject location = locations.getJSONObject(i);
+                String locationName = location.optString("name", "");
+                
+                // Перевіряємо, чи локація містить пошуковий рядок (нечутлива до регістру)
+                if(locationName.toLowerCase().contains(searchString.toLowerCase())){
+                    selectedCity = locationName;
+                    break;
+                }
+            }
+        }
+        
+        // Якщо не знайшли точної локації, повертаємо null (пропускаємо цю вакансію)
+        if(selectedCity == null){
+            System.out.println("Job skipped - location not matching search criteria: " + 
+                (locations != null && locations.length() > 0 ? 
+                    locations.getJSONObject(0).optString("name", "Unknown") : "No location"));
+            return null;
+        }
+        
         JobPosting vacancy = new JobPosting();
 
         //Title
@@ -99,16 +127,7 @@ public class MuseStrategy implements Strategy{
             vacancy.setCompanyName("Unknown");   
         }
 
-        //Location
-        JSONArray locations = job.optJSONArray("locations");
-        if(locations != null && locations.length() > 0){
-            JSONObject location = locations.getJSONObject(0);
-            vacancy.setCity(location.optString("name", "Remote"));
-        } else {
-            vacancy.setCity("Remote");
-
-        }
-
+        vacancy.setCity(selectedCity);
         vacancy.setWebsiteName("themuse.com");
 
         return vacancy;

@@ -20,6 +20,14 @@ public class HtmlView implements View {
             "src", "view", "jobPostings.html"
     ).toString();
 
+    // Додайте більше міст у масив, щоб шукати в декількох місцях
+    private static final String[] SEARCH_CITIES = {
+        "Dallas, TX",
+        "Fort Worth, TX",
+        "Austin, TX",
+        "Houston, TX"
+    };
+
     private Controller controller;
 
     @Override
@@ -56,8 +64,8 @@ public class HtmlView implements View {
     }
 
     public void emulateCitySelection() {
-        System.out.println("Emulating city selection: Dallas-Fort Worth Metroplex");
-        controller.onCitySelected("Dallas-Fort Worth Metroplex");
+        System.out.println("Emulating city selection for " + SEARCH_CITIES.length + " cities");
+        controller.onCitiesSelected(SEARCH_CITIES);
     }
 
     private void createFileFromBackup() {
