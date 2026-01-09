@@ -1,7 +1,7 @@
 package main;
 
 import com.sun.net.httpserver.HttpServer;
-import com.sun.tools.javac.parser.ReferenceParser.Mode;
+import com.sun.tools.javac.parser.ReferenceParser.Model;
 import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpExchange;
 import model.Model;
@@ -64,6 +64,24 @@ public class WebServer {
     }
 
     static class SearchHandler implements HttpHandler{
-        
+        public void handle(HttpExchange exchange) throws IOException{
+            Map<String, String> params = parseQuery(exchange.getRequestURI().getQuery());
+
+            String location = params.getOrDefault("location", "Dallas, TX");
+            String position = params.getOrDefault("position", "");
+
+            System.out.println("Search request: location=" + location + ", position=" + position);
+
+            List<JobPosting> jobs = model.getJobPostings(location);
+            String jsonResponse - convertToJson(jobs);
+
+            exchange.getResponseHeaders().set("Content-Type", "application/json");
+            exchange.getResponseHeaders().set("Access-Control-Allow-Origin", "*");
+            exchange.sendResponseHeaders(200, jsonResponse.getBytes().length);
+
+            OutputStream os = exchange.getResponseBody();
+            os.write(jsonResponse.getBytes());
+            os.close();
+        }
     }
 }
