@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Java Job Aggregator</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Заголовок -->
+        <header>
+            <h1>☕ Java Job Aggregator</h1>
+            <p>Find your next Java developer position</p>
+        </header>
+
+        <!-- Панель фільтрів -->
+        <div class="filters">
+            <div class="filter-group">
+                <label for="location">📍 Location:</label>
+                <select id="location">
+                    <option value="Dallas, TX">Dallas, TX</option>
+                    <option value="Austin, TX">Austin, TX</option>
+                    <option value="San Francisco, CA">San Francisco, CA</option>
+                    <option value="New York, NY">New York, NY</option>
+                    <option value="Remote">Remote</option>
+                </select>
+            </div>
+
+            <div class="filter-group">
+                <label for="position">💼 Position:</label>
+                <select id="position">
+                    <option value="">All Java Positions</option>
+                    <option value="Junior">Junior Developer</option>
+                    <option value="Senior">Senior Developer</option>
+                    <option value="Lead">Lead/Architect</option>
+                </select>
+            </div>
+
+            <button id="searchBtn" onclick="searchJobs()">🔍 Search Jobs</button>
+        </div>
+
+        <!-- Статус -->
+        <div id="status" class="status">Ready to search. Select filters and click Search.</div>
+
+        <!-- Таблиця результатів -->
+        <div class="results">
+            <h2>📊 Results: <span id="jobCount">0</span> jobs</h2>
+            <table id="jobsTable">
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Company</th>
+                        <th>Location</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="jobsTableBody">
+                    <!-- Вакансії будуть додаватися тут через JS -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

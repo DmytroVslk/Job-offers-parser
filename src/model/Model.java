@@ -35,5 +35,13 @@ public class Model {
         }
         view.update(allVacancies);
     }
+
+    public List<JobPosting> getJobPostings(String city) {
+        List<JobPosting> vacancies = new ArrayList<>();
+        for (Provider provider : providers) {
+            vacancies.addAll(provider.getJavaJobPostings(city));
+        }
+        return vacancies;
+    }
 }
 
