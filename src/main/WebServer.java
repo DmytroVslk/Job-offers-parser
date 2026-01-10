@@ -12,7 +12,6 @@ import java.io.*;
 import java.net.InetSocketAddress;
 import java.net.URLDecoder;
 import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,7 +20,25 @@ public class WebServer {
     private static Model model;
 
     public static void main(String[] args) throws IOException {
+        // Ініціалізація моделі
+        model = new Model(new DummyView(), new Provider(new MuseStrategy()));
         
+        // Створюємо HTTP сервер на порту 8080
+        HttpServer server = HttpServer.create(new InetSocketAddress(8080), 0);
+        
+        // Маршрути
+        server.createContext("/", new StaticFileHandler());
+        server.createContext("/search", new SearchHandler());
+        
+        server.setExecutor(null);
+        server.start();
+        
+        System.out.println("🚀 Server started at http://localhost:8080");
+        System.out.println("📂 Serving files from: src/view/");
+        System.out.println("Press Ctrl+C to stop");
+        
+        // Автоматично відкрити браузер
+        openBrowser("http://localhost:8080");
     }
 
     static class StaticFileHandler implements HttpHandler{
@@ -62,7 +79,7 @@ public class WebServer {
         }
     }
 
-    public class SearchHandler implements HttpHandler{
+    public static class SearchHandler implements HttpHandler{
         public void handle(HttpExchange exchange) throws IOException{
             Map<String, String> params = parseQuery(exchange.getRequestURI().getQuery());
 
@@ -141,11 +158,11 @@ public class WebServer {
         try {
             String os = System.getProperty("os.name").toLowerCase();
             if (os.contains("win")) {
-                Runtime.getRuntime().exec("rundll32 url.dll,FileProtocolHandler " + url);
+                Runtime.getRuntime().exec(new String[]{"rundll32", "url.dll,FileProtocolHandler", url});
             } else if (os.contains("mac")) {
-                Runtime.getRuntime().exec("open " + url);
+                Runtime.getRuntime().exec(new String[]{"open", url});
             } else if (os.contains("nix") || os.contains("nux")) {
-                Runtime.getRuntime().exec("xdg-open " + url);
+                Runtime.getRuntime().exec(new String[]{"xdg-open", url});
             }
         } catch (IOException e) {
             System.out.println("Please open manually: " + url);
