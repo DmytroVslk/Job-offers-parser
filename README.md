@@ -18,4 +18,4 @@ Main modules
 1. Server — runs the HTTP server and search API.
 2. Model/Provider/Strategy — fetching and aggregating jobs.
 3. View — HTML interface and rendering results.
-4. VO (JobPosting)** — job data structure.
+4. VO (JobPosting) — job data structure.
