@@ -34,7 +34,7 @@ public class WebServer {
         server.start();
         
         System.out.println("🚀 Server started at http://localhost:8080");
-        System.out.println("📂 Serving files from: src/view/");
+        System.out.println("📂 Serving files from: src/main/resources/view/");
         System.out.println("Press Ctrl+C to stop");
         
         // Автоматично відкрити браузер
@@ -50,7 +50,7 @@ public class WebServer {
                 path = "/index.html";
             }
 
-            String filePath = "src/view" + path;
+            String filePath = "src/main/resources/view" + path;
             File file = new File(filePath);
 
             if(file.exists()){

@@ -17,7 +17,7 @@ public class HtmlView implements View {
 
     private final String filePath = Paths.get(
             System.getProperty("user.dir"),
-            "src", "view", "jobPostings.html"
+            "src", "main", "resources", "view", "jobPostings.html"
     ).toString();
 
     // Додайте більше міст у масив, щоб шукати в декількох місцях
@@ -72,7 +72,7 @@ public class HtmlView implements View {
         try {
             String backupPath = Paths.get(
                     System.getProperty("user.dir"),
-                    "src", "view", "backup.html"
+                    "src", "main", "resources", "view", "backup.html"
             ).toString();
 
             File backupFile = new File(backupPath);
