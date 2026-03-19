@@ -17,8 +17,16 @@ public class HtmlView implements View {
 
     private final String filePath = Paths.get(
             System.getProperty("user.dir"),
-            "src", "view", "jobPostings.html"
+            "src", "main", "resources", "view", "jobPostings.html"
     ).toString();
+
+    // Додайте більше міст у масив, щоб шукати в декількох місцях
+    private static final String[] SEARCH_CITIES = {
+        "Dallas, TX",
+        "Fort Worth, TX",
+        "Austin, TX",
+        "Houston, TX"
+    };
 
     private Controller controller;
 
@@ -56,15 +64,15 @@ public class HtmlView implements View {
     }
 
     public void emulateCitySelection() {
-        System.out.println("Emulating city selection: Dallas-Fort Worth Metroplex");
-        controller.onCitySelected("Dallas-Fort Worth Metroplex");
+        System.out.println("Emulating city selection for " + SEARCH_CITIES.length + " cities");
+        controller.onCitiesSelected(SEARCH_CITIES);
     }
 
     private void createFileFromBackup() {
         try {
             String backupPath = Paths.get(
                     System.getProperty("user.dir"),
-                    "src", "view", "backup.html"
+                    "src", "main", "resources", "view", "backup.html"
             ).toString();
 
             File backupFile = new File(backupPath);

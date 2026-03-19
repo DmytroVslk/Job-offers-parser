@@ -14,4 +14,8 @@ public class Controller {
     public void onCitySelected(String cityName) {
         model.selectCity(cityName);
     }
+
+    public void onCitiesSelected(String[] cities) {
+        model.selectCities(cities);
+    }
 }

@@ -1,6 +1,8 @@
 # === Java build output ===
 out/
 *.class
+target/
+lib/
 
 # === IntelliJ IDEA ===
 *.iml
