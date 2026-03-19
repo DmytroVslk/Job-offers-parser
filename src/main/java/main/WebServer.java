@@ -20,13 +20,13 @@ public class WebServer {
     private static Model model;
 
     public static void main(String[] args) throws IOException {
-        // Ініціалізація моделі
+        // Initialize model
         model = new Model(new DummyView(), new Provider(new MuseStrategy()));
         
-        // Створюємо HTTP сервер на порту 8080
+        // Create HTTP server on port 8080
         HttpServer server = HttpServer.create(new InetSocketAddress(8080), 0);
         
-        // Маршрути
+        // Routes
         server.createContext("/", new StaticFileHandler());
         server.createContext("/search", new SearchHandler());
         
@@ -37,7 +37,7 @@ public class WebServer {
         System.out.println("📂 Serving files from: src/main/resources/view/");
         System.out.println("Press Ctrl+C to stop");
         
-        // Автоматично відкрити браузер
+        // Automatically open browser
         openBrowser("http://localhost:8080");
     }
 

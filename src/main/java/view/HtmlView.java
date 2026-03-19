@@ -20,7 +20,7 @@ public class HtmlView implements View {
             "src", "main", "resources", "view", "jobPostings.html"
     ).toString();
 
-    // Додайте більше міст у масив, щоб шукати в декількох місцях
+    // Add more cities to the array to search in multiple locations
     private static final String[] SEARCH_CITIES = {
         "Dallas, TX",
         "Fort Worth, TX",
@@ -35,7 +35,7 @@ public class HtmlView implements View {
         System.out.println("HtmlView.update() called with " + vacancies.size() + " vacancies");
 
         try {
-            // Перевіряємо, чи існує файл
+            // Check if file exists
             File file = new File(filePath);
             System.out.println("File path: " + filePath);
             System.out.println("File exists: " + file.exists());
@@ -127,7 +127,7 @@ public class HtmlView implements View {
 
             if (templateHidden.isEmpty()) {
                 System.out.println("No template found! Creating default template");
-                // Додаємо шаблон, якщо його немає
+                // Add template if it doesn't exist
                 Element table = doc.select("table").first();
                 if (table != null) {
                     Element templateRow = doc.createElement("tr");
@@ -144,7 +144,7 @@ public class HtmlView implements View {
 
             Element template = templateHidden.clone().removeAttr("style").removeClass("template").get(0);
 
-            // Видаляємо старі вакансії (крім шаблону)
+            // Remove old vacancies (except template)
             Elements prevVacancies = doc.getElementsByClass("vacancy");
             System.out.println("Previous vacancies found: " + prevVacancies.size());
 
@@ -154,25 +154,25 @@ public class HtmlView implements View {
                 }
             }
 
-            // Додаємо нові вакансії
+            // Add new vacancies
             System.out.println("Adding " + vacancies.size() + " new vacancies");
             for (JobPosting vacancy : vacancies) {
                 Element vacancyElement = template.clone();
 
-                // Заголовок та URL
+                // Title and URL
                 Element vacancyLink = vacancyElement.select("a").first();
                 if (vacancyLink != null) {
                     vacancyLink.text(vacancy.getTitle());
                     vacancyLink.attr("href", vacancy.getUrl());
                 }
 
-                // Місто
+                // City
                 Element city = vacancyElement.getElementsByClass("city").first();
                 if (city != null) {
                     city.text(vacancy.getCity());
                 }
 
-                // Назва компанії
+                // Company name
                 Element companyName = vacancyElement.getElementsByClass("companyName").first();
                 if (companyName != null) {
                     companyName.text(vacancy.getCompanyName());

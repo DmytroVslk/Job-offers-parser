@@ -27,11 +27,11 @@ public class LinkedinStrategy implements Strategy {
             System.out.println("Document title: " + doc.title());
             System.out.println("Document length: " + doc.html().length());
 
-            // Знаходимо елементи вакансій
+            // Find job posting elements
             Elements vacanciesHtmlList = doc.select("div[data-entity-urn*='jobPosting']");
             System.out.println("Found jobPosting elements: " + vacanciesHtmlList.size());
 
-            // Виводимо структуру перших кількох елементів для аналізу
+            // Output structure of first few elements for analysis
             for (int i = 0; i < Math.min(2, vacanciesHtmlList.size()); i++) {
                 Element element = vacanciesHtmlList.get(i);
                 System.out.println("=== Element " + (i + 1) + " structure ===");
@@ -64,7 +64,7 @@ public class LinkedinStrategy implements Strategy {
         JobPosting vacancy = new JobPosting();
         vacancy.setWebsiteName("linkedin.com");
 
-        // Розширений пошук заголовка
+        // Extended title search
         String title = findText(element,
                 "h3 a span[title]", "title",
                 "h3 a span", "text",
@@ -77,7 +77,7 @@ public class LinkedinStrategy implements Strategy {
 
         vacancy.setTitle(title.isEmpty() ? "Title not found" : title);
 
-        // Розширений пошук URL
+        // Extended URL search
         Elements linkElements = element.select("h3 a, a[data-tracking-control-name='public_jobs_jserp-result_search-card']");
         String jobUrl = "https://linkedin.com";
         if (!linkElements.isEmpty()) {
@@ -92,7 +92,7 @@ public class LinkedinStrategy implements Strategy {
         }
         vacancy.setUrl(jobUrl);
 
-        // Розширений пошук компанії
+        // Extended company search
         String company = findText(element,
                 "h4 a", "text",
                 "[data-test-id='job-company']", "text",
@@ -103,7 +103,7 @@ public class LinkedinStrategy implements Strategy {
 
         vacancy.setCompanyName(company.isEmpty() ? "Company not found" : company);
 
-        // Розширений пошук локації
+        // Extended location search
         String location = findText(element,
                 "[data-test-id='job-location']", "text",
                 ".job-card-container__metadata-item", "text",
@@ -113,7 +113,7 @@ public class LinkedinStrategy implements Strategy {
 
         vacancy.setCity(location.isEmpty() ? "Location not found" : location);
 
-        // Якщо нічого не знайшли, виведемо додаткову інформацію
+        // If nothing found, output additional information
         if (title.isEmpty() && company.isEmpty() && location.isEmpty()) {
             System.out.println("No data extracted, element classes: " + element.className());
             System.out.println("Element text: " + element.text().substring(0, Math.min(100, element.text().length())));
@@ -122,7 +122,7 @@ public class LinkedinStrategy implements Strategy {
         return vacancy;
     }
 
-    // Допоміжний метод для пошуку тексту з різними селекторами
+    // Helper method for finding text with different selectors
     private String findText(Element element, String... selectorTypePairs) {
         for (int i = 0; i < selectorTypePairs.length; i += 2) {
             String selector = selectorTypePairs[i];

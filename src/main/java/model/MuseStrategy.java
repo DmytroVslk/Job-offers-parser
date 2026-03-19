@@ -21,7 +21,7 @@ public class MuseStrategy implements Strategy{
         List<JobPosting> allVacancies = new ArrayList<>(); 
 
         try{
-            // Запит декількох сторінок
+            // Request multiple pages
             for(int page = 1; page <= 50; page++) {
                 //Build URL
                 String urlString = API_BASE + 
@@ -54,7 +54,7 @@ public class MuseStrategy implements Strategy{
                 
                 System.out.println("Number of job postings found on page " + page + ": " + result.length());
 
-                // Якщо результатів немає, припиняємо запити
+                // If no results, stop requests
                 if(result.length() == 0) {
                     break;
                 }
@@ -82,12 +82,12 @@ public class MuseStrategy implements Strategy{
         String selectedCity = null;
         
         if(locations != null && locations.length() > 0){
-            // Спробуємо знайти локацію, яка точно відповідає пошуковому запиту
+            // Try to find location that exactly matches search query
             for(int i = 0; i < locations.length(); i++){
                 JSONObject location = locations.getJSONObject(i);
                 String locationName = location.optString("name", "");
                 
-                // Перевіряємо, чи локація містить пошуковий рядок (нечутлива до регістру)
+                // Check if location contains search string (case insensitive)
                 if(locationName.toLowerCase().contains(searchString.toLowerCase())){
                     selectedCity = locationName;
                     break;
@@ -95,7 +95,7 @@ public class MuseStrategy implements Strategy{
             }
         }
         
-        // Якщо не знайшли точної локації, повертаємо null (пропускаємо цю вакансію)
+        // If exact location not found, return null (skip this vacancy)
         if(selectedCity == null){
             System.out.println("Job skipped - location not matching search criteria: " + 
                 (locations != null && locations.length() > 0 ? 
