@@ -3,12 +3,13 @@ package model;
 import vo.JobPosting;
 
 import java.util.List;
+import java.util.Objects;
 
 public class Provider {
     private Strategy strategy;
 
     public Provider(Strategy strategy) {
-        this.strategy = strategy;
+        this.strategy = Objects.requireNonNull(strategy, "strategy must not be null");
     }
 
     public List<JobPosting> getJavaJobPostings(String searchString) {
@@ -16,6 +17,6 @@ public class Provider {
     }
 
     public void setStrategy(Strategy strategy) {
-        this.strategy = strategy;
+        this.strategy = Objects.requireNonNull(strategy, "strategy must not be null");
     }
 }
