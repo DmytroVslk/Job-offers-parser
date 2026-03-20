@@ -1,6 +1,6 @@
 package main;
 
-import model.MuseStrategy;
+import model.AdzunaStrategy;
 import model.Model;
 import model.Provider;
 import view.HtmlView;
@@ -10,7 +10,7 @@ public class Aggregator {
     public static void main(String[] args) {
         HtmlView view = new HtmlView();
 
-        Model model = new Model(view, new Provider(new MuseStrategy()));
+        Model model = new Model(view, new Provider(new AdzunaStrategy()));
         Controller controller = new Controller(model);
 
         view.setController(controller);

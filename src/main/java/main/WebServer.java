@@ -3,8 +3,8 @@ package main;
 import com.sun.net.httpserver.HttpServer;
 import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpExchange;
+import model.AdzunaStrategy;
 import model.Model;
-import model.MuseStrategy;
 import model.Provider;
 import vo.JobPosting;
 
@@ -21,7 +21,7 @@ public class WebServer {
 
     public static void main(String[] args) throws IOException {
         // Initialize model
-        model = new Model(new DummyView(), new Provider(new MuseStrategy()));
+        model = new Model(new DummyView(), new Provider(new AdzunaStrategy()));
         
         // Create HTTP server on port 8080
         HttpServer server = HttpServer.create(new InetSocketAddress(8080), 0);
