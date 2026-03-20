@@ -13,6 +13,10 @@ lib/
 # === VS Code ===
 .vscode/
 
+# === Generated view output ===
+src/main/resources/view/jobPostings.html
+src/main/resources/view/backup.html
+
 # === OS junk ===
 .DS_Store
 Thumbs.db
