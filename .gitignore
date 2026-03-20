@@ -2,12 +2,16 @@
 out/
 *.class
 target/
+bin/
 lib/
 
 # === IntelliJ IDEA ===
 *.iml
 .idea/
 !.idea/.gitignore
+
+# === VS Code ===
+.vscode/
 
 # === OS junk ===
 .DS_Store
